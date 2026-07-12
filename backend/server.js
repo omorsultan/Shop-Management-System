@@ -15,8 +15,9 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'Shop Management System backend is running' });
 });
 
-// TODO (Phase 2+): mount real routers here, e.g.
-// app.use('/api/auth', require('./routes/authRoutes'));
+app.use('/api/auth', require('./routes/authRoutes'));
+
+// TODO (Phase 3+): mount remaining routers here, e.g.
 // app.use('/api/products', require('./routes/productRoutes'));
 
 app.listen(PORT, async () => {
