@@ -1,0 +1,100 @@
+{
+  "info": {
+    "name": "Shop Management System - Phase 4 (Purchases)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://localhost:5000/api" },
+    { "key": "token", "value": "" },
+    { "key": "supplier_id", "value": "1" },
+    { "key": "product_id", "value": "1" },
+    { "key": "purchase_id", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Login (get token first)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const data = pm.response.json();",
+              "if (data.token) { pm.collectionVariables.set('token', data.token); }"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{base_url}}/auth/login",
+        "body": { "mode": "raw", "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"admin123\"\n}" }
+      }
+    },
+    {
+      "name": "Purchase - Create (success case)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const data = pm.response.json();",
+              "if (data.purchase) { pm.collectionVariables.set('purchase_id', data.purchase.purchase_id); }"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": "{{base_url}}/purchases",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"supplier_id\": {{supplier_id}},\n  \"items\": [\n    { \"product_id\": {{product_id}}, \"quantity\": 50, \"unit_cost\": 35 }\n  ]\n}"
+        }
+      }
+    },
+    {
+      "name": "Purchase - Create (rollback test: bad product_id)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": "{{base_url}}/purchases",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"supplier_id\": {{supplier_id}},\n  \"items\": [\n    { \"product_id\": {{product_id}}, \"quantity\": 10, \"unit_cost\": 35 },\n    { \"product_id\": 999999, \"quantity\": 5, \"unit_cost\": 10 }\n  ]\n}"
+        }
+      }
+    },
+    {
+      "name": "Product - Verify stock unaffected by failed purchase",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{base_url}}/products/{{product_id}}"
+      }
+    },
+    {
+      "name": "Purchase - List",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{base_url}}/purchases"
+      }
+    },
+    {
+      "name": "Purchase - Get One (with items)",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{base_url}}/purchases/{{purchase_id}}"
+      }
+    }
+  ]
+}
