@@ -1,0 +1,115 @@
+{
+  "info": {
+    "name": "Shop Management System - Phase 5 (Sales)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://localhost:5000/api" },
+    { "key": "token", "value": "" },
+    { "key": "customer_id", "value": "1" },
+    { "key": "product_id", "value": "1" },
+    { "key": "sale_id", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Login (get token first)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const data = pm.response.json();",
+              "if (data.token) { pm.collectionVariables.set('token', data.token); }"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{base_url}}/auth/login",
+        "body": { "mode": "raw", "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"admin123\"\n}" }
+      }
+    },
+    {
+      "name": "Sale - Create (success case, with discount)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const data = pm.response.json();",
+              "if (data.sale) { pm.collectionVariables.set('sale_id', data.sale.sale_id); }"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": "{{base_url}}/sales",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"customer_id\": {{customer_id}},\n  \"discount\": 10,\n  \"items\": [\n    { \"product_id\": {{product_id}}, \"quantity\": 3 }\n  ]\n}"
+        }
+      }
+    },
+    {
+      "name": "Sale - Create (walk-in customer, no customer_id)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": "{{base_url}}/sales",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"items\": [\n    { \"product_id\": {{product_id}}, \"quantity\": 2 }\n  ]\n}"
+        }
+      }
+    },
+    {
+      "name": "Sale - Create (rollback test: overselling)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": "{{base_url}}/sales",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"items\": [\n    { \"product_id\": {{product_id}}, \"quantity\": 999999 }\n  ]\n}"
+        }
+      }
+    },
+    {
+      "name": "Product - Verify stock unaffected by failed sale",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{base_url}}/products/{{product_id}}"
+      }
+    },
+    {
+      "name": "Sale - List",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{base_url}}/sales"
+      }
+    },
+    {
+      "name": "Sale - Get One (invoice view)",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{base_url}}/sales/{{sale_id}}"
+      }
+    }
+  ]
+}

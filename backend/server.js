@@ -25,9 +25,11 @@ app.use('/api/suppliers', require('./routes/supplierRoutes'));
 app.use('/api/customers', require('./routes/customerRoutes'));
 app.use('/api/products', require('./routes/productRoutes'));
 app.use('/api/purchases', require('./routes/purchaseRoutes'));
+app.use('/api/sales', require('./routes/salesRoutes'));
 
-// TODO (Phase 5+): mount remaining routers here, e.g.
-// app.use('/api/sales', require('./routes/salesRoutes'));
+// TODO (Phase 6+): mount remaining routers here, e.g.
+// app.use('/api/reports', require('./routes/reportRoutes'));
+// app.use('/api/inventory', require('./routes/inventoryRoutes'));
 
 // Multer / general error handler (catches file-type and file-size errors from uploadMiddleware)
 app.use((err, req, res, next) => {
