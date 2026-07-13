@@ -1,0 +1,97 @@
+{
+  "info": {
+    "name": "Shop Management System - Phase 6 (Inventory & Reports)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://localhost:5000/api" },
+    { "key": "token", "value": "" },
+    { "key": "product_id", "value": "1" }
+  ],
+  "item": [
+    {
+      "name": "Login (get token first)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const data = pm.response.json();",
+              "if (data.token) { pm.collectionVariables.set('token', data.token); }"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{base_url}}/auth/login",
+        "body": { "mode": "raw", "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"admin123\"\n}" }
+      }
+    },
+    {
+      "name": "Inventory - Current Stock",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{base_url}}/inventory"
+      }
+    },
+    {
+      "name": "Inventory - Low Stock Alerts",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{base_url}}/inventory/low-stock"
+      }
+    },
+    {
+      "name": "Inventory - Stock History for Product",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{base_url}}/inventory/{{product_id}}/history"
+      }
+    },
+    {
+      "name": "Report - Daily Sales (today)",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{base_url}}/reports/sales/daily"
+      }
+    },
+    {
+      "name": "Report - Monthly Sales (current month)",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{base_url}}/reports/sales/monthly"
+      }
+    },
+    {
+      "name": "Report - Purchases (by supplier)",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{base_url}}/reports/purchases"
+      }
+    },
+    {
+      "name": "Report - Stock Valuation",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{base_url}}/reports/stock"
+      }
+    },
+    {
+      "name": "Report - Best Selling Products",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{base_url}}/reports/best-selling?limit=5"
+      }
+    }
+  ]
+}

@@ -26,10 +26,10 @@ app.use('/api/customers', require('./routes/customerRoutes'));
 app.use('/api/products', require('./routes/productRoutes'));
 app.use('/api/purchases', require('./routes/purchaseRoutes'));
 app.use('/api/sales', require('./routes/salesRoutes'));
+app.use('/api/inventory', require('./routes/inventoryRoutes'));
+app.use('/api/reports', require('./routes/reportRoutes'));
 
-// TODO (Phase 6+): mount remaining routers here, e.g.
-// app.use('/api/reports', require('./routes/reportRoutes'));
-// app.use('/api/inventory', require('./routes/inventoryRoutes'));
+// Phase 7 (frontend) has no backend routes — HTML/CSS/JS consumes the API above.
 
 // Multer / general error handler (catches file-type and file-size errors from uploadMiddleware)
 app.use((err, req, res, next) => {
