@@ -7,10 +7,10 @@ document.getElementById('welcome-heading').textContent =
   `Welcome back, ${user.full_name ? user.full_name.split(' ')[0] : user.username}`;
 
 const MODULE_CARDS = [
-  { label: 'Categories', desc: 'Organize products into groups.', href: '/pages/categories.html', icon: '&#9635;', roles: ['admin', 'staff'], built: false },
-  { label: 'Suppliers', desc: 'Who you buy stock from.', href: '/pages/suppliers.html', icon: '&#9737;', roles: ['admin', 'staff'], built: false },
-  { label: 'Products', desc: 'Catalog, pricing, and images.', href: '/pages/products.html', icon: '&#9733;', roles: ['admin', 'staff'], built: false },
-  { label: 'Customers', desc: 'Buyer records and history.', href: '/pages/customers.html', icon: '&#9786;', roles: ['admin', 'staff'], built: false },
+  { label: 'Categories', desc: 'Organize products into groups.', href: '/pages/categories.html', icon: '&#9635;', roles: ['admin', 'staff'], built: true },
+  { label: 'Suppliers', desc: 'Who you buy stock from.', href: '/pages/suppliers.html', icon: '&#9737;', roles: ['admin', 'staff'], built: true },
+  { label: 'Products', desc: 'Catalog, pricing, and images.', href: '/pages/products.html', icon: '&#9733;', roles: ['admin', 'staff'], built: true },
+  { label: 'Customers', desc: 'Buyer records and history.', href: '/pages/customers.html', icon: '&#9786;', roles: ['admin', 'staff'], built: true },
   { label: 'Purchases', desc: 'Record stock coming in.', href: '/pages/purchases.html', icon: '&#8595;', roles: ['admin', 'staff'], built: false },
   { label: 'Sales', desc: 'Ring up a sale, print an invoice.', href: '/pages/sales.html', icon: '&#8593;', roles: ['admin', 'staff'], built: false },
   { label: 'Inventory', desc: 'Current stock and history.', href: '/pages/inventory.html', icon: '&#9638;', roles: ['admin', 'staff'], built: false },
