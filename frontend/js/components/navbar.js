@@ -8,13 +8,13 @@ const NAV_MODULES = [
   { id: 'dashboard', label: 'Dashboard', href: '/pages/dashboard.html', icon: '&#9679;', roles: ['admin', 'staff'], built: true },
 
   { section: 'Catalog' },
-  { id: 'categories', label: 'Categories', href: '/pages/categories.html', icon: '&#9635;', roles: ['admin', 'staff'], built: false },
-  { id: 'suppliers', label: 'Suppliers', href: '/pages/suppliers.html', icon: '&#9737;', roles: ['admin', 'staff'], built: false },
-  { id: 'products', label: 'Products', href: '/pages/products.html', icon: '&#9733;', roles: ['admin', 'staff'], built: false },
-  { id: 'customers', label: 'Customers', href: '/pages/customers.html', icon: '&#9786;', roles: ['admin', 'staff'], built: false },
+  { id: 'categories', label: 'Categories', href: '/pages/categories.html', icon: '&#9635;', roles: ['admin', 'staff'], built: true },
+  { id: 'suppliers', label: 'Suppliers', href: '/pages/suppliers.html', icon: '&#9737;', roles: ['admin', 'staff'], built: true },
+  { id: 'products', label: 'Products', href: '/pages/products.html', icon: '&#9733;', roles: ['admin', 'staff'], built: true },
+  { id: 'customers', label: 'Customers', href: '/pages/customers.html', icon: '&#9786;', roles: ['admin', 'staff'], built: true },
 
   { section: 'Transactions' },
-  { id: 'purchases', label: 'Purchases', href: '/pages/purchases.html', icon: '&#8595;', roles: ['admin', 'staff'], built: false },
+  { id: 'purchases', label: 'Purchases', href: '/pages/purchases.html', icon: '&#8595;', roles: ['admin', 'staff'], built: true },
   { id: 'sales', label: 'Sales', href: '/pages/sales.html', icon: '&#8593;', roles: ['admin', 'staff'], built: false },
 
   { section: 'Stock' },
@@ -74,8 +74,4 @@ function renderNavbar(activePageId) {
   document.getElementById('logout-btn').addEventListener('click', () => auth.logout());
 }
 
-function escapeHtml(str) {
-  const div = document.createElement('div');
-  div.textContent = str;
-  return div.innerHTML;
-}
+// escapeHtml() lives in utils.js, loaded before this file.

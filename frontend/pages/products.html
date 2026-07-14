@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Products — Shop Management System</title>
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <div id="sidebar-root"></div>
+
+    <main class="content">
+      <div class="page-header">
+        <div>
+          <span class="eyebrow">Catalog</span>
+          <h1>Products</h1>
+          <p>Your full catalog, pricing, and stock levels.</p>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <div class="flex gap-8" style="flex-wrap:wrap; align-items:center;">
+          <div class="search-box">
+            <input type="text" id="product-search" placeholder="Search products…" />
+          </div>
+          <select class="filter-select" id="category-filter">
+            <option value="">All categories</option>
+          </select>
+          <select class="filter-select" id="supplier-filter">
+            <option value="">All suppliers</option>
+          </select>
+          <label class="filter-checkbox">
+            <input type="checkbox" id="low-stock-filter" />
+            Low stock only
+          </label>
+        </div>
+        <button type="button" class="btn btn-primary" id="add-product-btn">+ Add Product</button>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>Name</th>
+              <th>Category</th>
+              <th>Supplier</th>
+              <th>Cost</th>
+              <th>Price</th>
+              <th>Stock</th>
+              <th style="width:1%;">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="products-tbody"></tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/utils.js"></script>
+  <script src="/js/components/navbar.js"></script>
+  <script src="/js/components/modal.js"></script>
+  <script src="/js/products.js"></script>
+</body>
+</html>
